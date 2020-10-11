@@ -1,14 +1,13 @@
 const express = require("express");
-const morgan = require("morgan");
+//const morgan = require("morgan");
 const database = require("./database");
-
 
 const app = express();
 require("dotenv").config();
 
 const port = 4321;
 
-app.use(morgan("dev")); // some 3rd-party middleware for more info during development
+//app.use(morgan("dev")); // some 3rd-party middleware for more info during development
 
 app.get("/getOffers", async (req, res) => {
 
@@ -36,7 +35,17 @@ app.get("/getCompanies", async (req, res) => {
     })
 });
 
-app.get("/getOffers/:id", (req, res) => {
+app.get("/getOffers/:id", async (req, res) => {
+
+    const companies = await database.query("SELECT * from company WHERE company_id");
+    console.log(companies); 
+
+    res.json({
+        status: "success",
+        data: {
+            companies: ["recycleRes", "Something else"]
+        }
+    })
 
 })
 
