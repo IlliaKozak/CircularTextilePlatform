@@ -1,6 +1,7 @@
 const express = require("express");
 //const morgan = require("morgan");
 const database = require("./database");
+const cors = require("cors");
 
 const app = express();
 require("dotenv").config();
@@ -8,6 +9,7 @@ require("dotenv").config();
 const port = 4321;
 
 //app.use(morgan("dev")); // some 3rd-party middleware for more info during development
+app.use(cors());
 
 app.get("/getOffers", async (req, res) => {
 
@@ -16,8 +18,9 @@ app.get("/getOffers", async (req, res) => {
 
     res.json({
         status: "success",
+        results: offers.rows.length,
         data: {
-            offers: ["first", "second"]
+            offers: offers.rows
         }
     })
 });
@@ -36,14 +39,15 @@ app.get("/getCompanies", async (req, res) => {
 });
 
 app.get("/getOffers/:id", async (req, res) => {
+    console.log("Chosen ID: " + req.params.id); //getting an id that was requested in a URL
 
-    const companies = await database.query("SELECT * from company WHERE company_id");
-    console.log(companies); 
+    const offers = await database.query("SELECT * from offer WHERE offer_id = $1", [req.params.id] );
+    //parametrized query to avoid SQL injections, char after $ is replaced with an id
 
     res.json({
         status: "success",
         data: {
-            companies: ["recycleRes", "Something else"]
+            offers: offers.rows
         }
     })
 

@@ -1,12 +1,24 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import {BrowserRouter, Switch, Route} from "react-router-dom"; 
+import HomePage from "./routes/HomePage";
+import OfferPage from "./routes/OfferPage";
+import MarketPage from "./routes/MarketPage";
+import { ContextPlatformProvider } from './context/contextPlatform';
 
 function App() {
   return (
+    <ContextPlatformProvider>
     <div className="App">
-      hi there
+      <BrowserRouter>
+        <Switch> {/** using Switch to prevent loading of other routes when a chosen one is found */}
+          <Route exact path = "/" component = {HomePage}></Route>
+          <Route exact path = "/getOffers" component = {MarketPage}></Route>
+          <Route path = "/getOffers/:id" component = {OfferPage}></Route>
+        </Switch>
+      </BrowserRouter>
     </div>
+    </ContextPlatformProvider>
   );
 }
 
