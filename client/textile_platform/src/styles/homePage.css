@@ -1,0 +1,77 @@
+.page-top {
+    background-color: hsl(117, 81%, 8%);
+}
+
+.header {
+    display: flex;
+    padding-top: 30px;
+
+
+}
+
+.logo-container {
+    flex:3;
+    text-align: left;
+} 
+
+.logo {
+    width: 150px;
+    height: 150px;
+    margin-left: 50px;
+}
+
+.navigation-container {
+    flex: 2;
+}
+
+.btn-primary {
+    margin: 10px;
+}
+
+.home-intro {
+    display: flex;
+    margin-top: 50px;
+}
+
+.logo-big-container {
+    flex: 3;
+}
+
+.logo-big {
+    width: 350px;
+    height: 350px;
+    margin-left: 50px;
+    
+}
+
+.intro-container {
+    flex: 4;
+}
+
+h1 {
+    color: aliceblue;
+    font-family: sans-serif;
+}
+
+h3 {
+    color: aliceblue;
+}
+
+.partners-list {
+    height: 80px;
+    background-color: rgb(177, 177, 167);
+}
+
+.home-content {
+    margin-top: 150px;
+    margin-bottom: 100px;
+}
+
+
+
+
+
+
+
+
+
