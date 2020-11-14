@@ -1,38 +1,42 @@
 import React from "react";
 //import PlatformAPI from "../platformAPI";
 import axios from 'axios'
-import OfferItem from '../OfferItem'
+import OfferItemComponent from '../components/OfferItemComponent'
+import HeaderComponent from '../components/HeaderComponent';
+import { useState } from "react";
+import { useEffect } from "react";
 
 
 
-const offerPage = (props) => {
+function OfferPage (props) {
+
+    const [offerData, setOfferData] = useState({})
 
     
-    let offerData = []
     
     //console.log(props.location.state.id)
-    const getOfferData = () => {
-        axios.get('http://localhost:4321/getOffers/'+props.location.state.id).then((response) => {
-            offerData.push(response.data.data.offers[0])
-        }) 
+    useEffect (() => {
+        axios.get('http://localhost:4321/getOffers/' + props.location.state.id).then(response => {
+            setOfferData(response.data.data.offers[0])
 
-    } 
-    getOfferData();
+        })
+    }) 
 
-    console.log(offerData.get)
+
+    console.log(offerData)
 
     return(
         <div>
+            <HeaderComponent/>
             <p>Offer page</p> 
-            <OfferItem 
-                    title = {offerData}
-                    overview = {offerData.offer_overview}
-                     
-                     ></OfferItem>
+            <OfferItemComponent 
+                    title = {offerData.offer_title}
+                    location = {offerData.offer_location}
+            ></OfferItemComponent>
                     
         </div>
     )
 }
 
-export default offerPage;
+export default OfferPage;
 

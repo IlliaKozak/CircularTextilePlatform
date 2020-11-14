@@ -1,0 +1,18 @@
+.market-top {
+    background-image: url("../images/market_background.jpg");
+    background-position-y: center;
+    background-position-x: center;
+    background-size: 100% 1400px;
+}
+
+.filters {
+    margin: 15px;
+    background-color: rgb(240, 240, 240);
+    padding:10px
+}
+
+
+
+.offer-info {
+    
+}
