@@ -8,6 +8,8 @@ require("dotenv").config();
 
 const port = 4321;
 
+app.use(express.json()) //offer body that we are sending will be attached to 'req' so we can access it
+
 //app.use(morgan("dev")); // some 3rd-party middleware for more info during development
 app.use(cors());
 
@@ -50,6 +52,25 @@ app.get("/getOffers/:id", async (req, res) => {
             offers: offers.rows
         }
     })
+})
+
+app.post("/createOffer", async (req, res) => {
+
+    
+    try {
+        const result  = await database.query(
+        "INSERT INTO offer (offer_title, offer_overview, offer_location, quantity, waste_source, waste_type, waste_structure, waste_colour, contact_details) values ($1, $2, $3, $4, $5, $6, $7, $8, $9)", 
+        [req.body.offer_title, req.body.offer_overview, req.body.offer_location, req.body.quantity, req.body.waste_source, req.body.waste_type, req.body.waste_structure, req.body.waste_colour, req.body.contact_details])
+        res.status(201).json({
+            status: "success"
+            ,
+            data: {
+                offers: result.rows
+            }
+        })
+    } catch(err) {
+        console.log(err)
+    }
 
 })
 
