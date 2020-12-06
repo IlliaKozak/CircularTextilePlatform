@@ -30,6 +30,7 @@ function OfferPage (props) {
             <HeaderComponent/>
             <p>Offer page</p> 
             <OfferItemComponent 
+                    image = {offerData.offer_image}
                     title = {offerData.offer_title}
                     location = {offerData.offer_location}
             ></OfferItemComponent>

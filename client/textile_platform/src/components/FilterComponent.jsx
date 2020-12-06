@@ -7,7 +7,7 @@ function FilerComponent () {
 
   const [checkBoxState, setCheckBoxState] = useState({
       checkedApparel: false,
-      checkedHomeTextile: false,
+      checkedInteriorTextile: false,
       checkedOthers: false,
 
       checkedWoven: false,
@@ -31,8 +31,8 @@ function FilerComponent () {
               label="Apparel"
               />
               <FormControlLabel
-              control={<Checkbox checked={checkBoxState.checkedHomeTextile} onChange={handleChange} name="checkedHomeTextile"/>}
-              label="Home Textile"
+              control={<Checkbox checked={checkBoxState.checkedInteriorTextile} onChange={handleChange} name="checkedInteriorTextile"/>}
+              label="Interior Textile"
               />
               <FormControlLabel
               control={<Checkbox checked={checkBoxState.checkedOthers} onChange={handleChange} name="checkedOthers"/>}

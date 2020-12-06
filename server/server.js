@@ -1,17 +1,49 @@
 const express = require("express");
-//const morgan = require("morgan");
 const database = require("./database");
 const cors = require("cors");
+require("dotenv").config();
+const multer = require("multer");
+const cloudinary = require("cloudinary").v2;
+const {CloudinaryStorage} = require("multer-storage-cloudinary");
 
 const app = express();
-require("dotenv").config();
+
 
 const port = 4321;
 
 app.use(express.json()) //offer body that we are sending will be attached to 'req' so we can access it
-
-//app.use(morgan("dev")); // some 3rd-party middleware for more info during development
 app.use(cors());
+
+// const storage = multer.diskStorage({
+//     destination: function(req, file, cb) {
+//         cb(null, './upload/');
+
+//     },
+//     filename: function (req, file, cb) {
+//         cb(null, file.originalname)
+
+//     }
+// })
+
+//const upload = multer({storage: storage});
+
+
+
+cloudinary.config({
+    cloud_name: process.env.CLOUD_NAME,
+    api_key: process.env.API_KEY,
+    api_secret: process.env.API_SECRET
+    });
+
+    const storageCloudinary = new CloudinaryStorage ({
+    cloudinary: cloudinary,
+    folder: "textile platform",
+    allowedFormats: ["jpg", "png"],
+    transformation: [{ width: 200, height: 200, crop: "limit" }]
+    });
+
+    const parser = multer({ storage: storageCloudinary });
+
 
 app.get("/getOffers", async (req, res) => {
 
@@ -54,16 +86,21 @@ app.get("/getOffers/:id", async (req, res) => {
     })
 })
 
-app.post("/createOffer", async (req, res) => {
+app.post("/createOffer", parser.single('offer_image'), async (req, res) => {
 
-    
+    console.log(req.body)
+    console.log(req.body.offer_title)
+    console.log(req.file.path)
+
+    console.log(req.file)
     try {
         const result  = await database.query(
-        "INSERT INTO offer (offer_title, offer_overview, offer_location, quantity, waste_source, waste_type, waste_structure, waste_colour, contact_details) values ($1, $2, $3, $4, $5, $6, $7, $8, $9)", 
-        [req.body.offer_title, req.body.offer_overview, req.body.offer_location, req.body.quantity, req.body.waste_source, req.body.waste_type, req.body.waste_structure, req.body.waste_colour, req.body.contact_details])
+        "INSERT INTO offer (offer_title, offer_location, quantity, waste_source, waste_type, waste_structure, waste_colour, contact_details, offer_image) values ($1, $2, $3, $4, $5, $6, $7, $8, $9) returning *", 
+        [req.body.offer_title, req.body.offer_location, req.body.quantity, req.body.waste_source, req.body.waste_type, req.body.waste_structure, req.body.waste_colour, req.body.contact_details, req.file.path]
+       // ["some test title", "req.body.offer_location", req.body.quantity, "req.body.waste_source", "req.body.waste_type", "req.body.waste_structure", "req.body.waste_colour", "req.body.contact_details", "req.file.url"]
+        )
         res.status(201).json({
-            status: "success"
-            ,
+            status: "success",
             data: {
                 offers: result.rows
             }

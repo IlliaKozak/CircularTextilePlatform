@@ -20,6 +20,7 @@ class MarketPage extends Component  {
     componentDidMount() { //getting data of all offers by via request to server.js
         axios.get('http://localhost:4321/getOffers').then((response) => {
             this.setState({offersData: response.data.data.offers})
+            console.log(response)
         }) 
     }
 
@@ -63,6 +64,7 @@ class MarketPage extends Component  {
                             {this.state.offersData.map((offer, key)=> {
                             return(
                                 <OfferItemComponent key = {key} 
+                                image = {offer.offer_image}
                                 title = {offer.offer_title}
                                 overview = {offer.offer_overview}
                                 location = {offer.offer_location}

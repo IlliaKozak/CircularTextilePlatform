@@ -10,7 +10,7 @@ const offerItem = (props) => {
 
     const styling = {
         dispay: 'inline-block',
-        padding: '5px',
+        padding: '10px',
         textAlign: 'center',
         margin: '16px', 
         border: '1px solid black',
@@ -18,7 +18,7 @@ const offerItem = (props) => {
     }
 
     const imageStyle = {
-        width: '180px',
+        width: '200px',
         height: '200px'
     }
 
@@ -26,7 +26,7 @@ const offerItem = (props) => {
         
         <Grid item xs={3}>
             <Paper style={styling} onClick = {props.clicked}>
-            <img src={logo} style={imageStyle} alt="offer"/>
+            <img src={props.image} style={imageStyle} alt="offer"/>
             <div className="offer-info">
                 <h5>{props.title}</h5>
                 <p>Location: {props.location}</p>

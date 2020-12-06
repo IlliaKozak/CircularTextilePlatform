@@ -1,7 +1,7 @@
 import React from 'react';
 import HeaderComponent from '../components/HeaderComponent';
 import routes from './allRoutes';
-import {Grid, FormControl, InputLabel, Select, MenuItem, FormHelperText, TextField, Button} from '@material-ui/core/';
+import {Grid, FormControl, InputLabel, Select, MenuItem, FormHelperText, TextField, Button, InputAdornment} from '@material-ui/core/';
 import { useState } from 'react';
 import axios from 'axios';
 
@@ -9,18 +9,19 @@ function AddOffer (props) {
 
     const [offer, setOffer] = useState({
         offer_title: '',
-        offer_overview: 'bla',
         offer_location: '',
         quantity: 1,
         waste_source: '',
         waste_type: '',
         waste_structure: '',
         waste_colour: '',
-        contact_details: ''
+        contact_details: '',
+        offer_image: ''
     })
 
     const formStyle = {
-        width: '250px'
+        width: '250px',
+        margin: '50px'
     }
 
     const handleChange = (event) => {
@@ -31,25 +32,53 @@ function AddOffer (props) {
         });
       };
 
-    const handleSubmit = async () => {
+    const handleImageChange = event => {
+        setOffer({
+            ...offer,
+            offer_image: event.target.files[0]
+        })
+        console.log(event.target.files[0])
+    }
+
+    const handleSubmit = async (e) => {
+        
         try{
-            const response = await axios.post('http://localhost:4321/createOffer', {
-                
-                offer_title: offer.offer_title,
-                offer_overview: offer.offer_overview,
-                offer_location: offer.offer_location,
-                quantity: offer.quantity,
-                waste_source: offer.waste_source,
-                waste_type: offer.waste_type,
-                waste_structure: offer.waste_structure,
-                waste_colour: offer.waste_colour,
-                contact_details: offer.contact_details
+            const fd = new FormData();
+            fd.append('offer_title', offer.offer_title)
+            fd.append('offer_location', offer.offer_location)
+            fd.append('quantity', offer.quantity)
+            fd.append('waste_source', offer.waste_source)
+            fd.append('waste_type', offer.waste_type)
+            fd.append('waste_structure', offer.waste_structure)
+            fd.append('waste_colour', offer.waste_colour)
+            fd.append('contact_details', offer.contact_details)
+            fd.append('offer_image', offer.offer_image, offer.offer_image.name)
+            
+            console.log(fd);
+            console.log(offer.offer_image)    
+            const response = await axios.post('http://localhost:4321/createOffer', fd, {
+
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                  },
+                // offer_title: offer.offer_title,
+                // offer_location: offer.offer_location,
+                // quantity: offer.quantity,
+                // waste_source: offer.waste_source,
+                // waste_type: offer.waste_type,
+                // waste_structure: offer.waste_structure,
+                // waste_colour: offer.waste_colour,
+                // contact_details: offer.contact_details,
+                // offer_image: fd
         });
             console.log(response)
         } catch(err) {
             console.log(err)
         }
         
+        return(
+            alert("Item was created")
+        )
     }
 
     return (
@@ -99,9 +128,7 @@ function AddOffer (props) {
                             </Select>
                         <FormHelperText>Required</FormHelperText>
                     </FormControl>
-                </div>
-
-                <div>
+                               
                     <FormControl required style={formStyle}>
                         <InputLabel >Source</InputLabel>
                             <Select
@@ -114,9 +141,7 @@ function AddOffer (props) {
                             </Select>
                         <FormHelperText>Required</FormHelperText>
                     </FormControl>
-                </div>
-
-                <div>
+                
                     <FormControl required style={formStyle}>
                         <InputLabel >Structure</InputLabel>
                             <Select
@@ -131,9 +156,7 @@ function AddOffer (props) {
                             </Select>
                         <FormHelperText>Required</FormHelperText>
                     </FormControl>
-                </div>
-
-                <div>
+                
                     <FormControl required style={formStyle}>
                         <InputLabel >Colour</InputLabel>
                             <Select
@@ -149,7 +172,16 @@ function AddOffer (props) {
                     </FormControl>
                 </div>
 
-                <div>
+                    <TextField style= {formStyle}
+                        label="With normal TextField"
+                        name = "quantity"
+                        InputProps={{
+                            startAdornment: <InputAdornment position="start">Kg</InputAdornment>,
+                        }}
+                        onChange={handleChange}
+                        variant="outlined"
+                    />
+                
                     <FormControl required style={formStyle}>
                         <InputLabel >Location</InputLabel>
                             <Select
@@ -164,18 +196,18 @@ function AddOffer (props) {
                             </Select>
                         <FormHelperText>Required</FormHelperText>
                     </FormControl>
-                </div>
+                           
+                        <FormControl style={formStyle} >
+                            <TextField required
+                            onChange={handleChange}
+                            name="contact_details"  label="Email" variant="outlined" />
+                        </FormControl>
 
-                <div>
-                <div>
-                    <FormControl >
-                        <TextField required
-                        onChange={handleChange}
-                        name="contact_details"  label="Email" variant="outlined" />
-                    </FormControl>
-                </div>
-            </div>
-
+                        <form enctype="multipart/form-data" method="post">
+                        <input type="file" name="offer_image" onChange={handleImageChange}/>
+                        </form>
+                        
+                
             <div>
                 <Button type="submit" onClick={handleSubmit} variant="contained" color="primary">Submit</Button> 
             </div>
