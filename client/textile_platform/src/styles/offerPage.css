@@ -1,0 +1,22 @@
+
+.grid{
+    padding-top: 60px;
+    padding-bottom: 60px;
+}
+    .offer-image {
+        width: 350px;
+        height: 400px;
+    }
+
+    .data-form {
+        width: 400px;
+        margin: auto;
+    }
+
+        .data-form p, h3{
+            margin-top: 30px;
+            margin-bottom: 10px;
+        }
+
+
+

@@ -4,6 +4,7 @@ import routes from './allRoutes';
 import {Grid, FormControl, InputLabel, Select, MenuItem, FormHelperText, TextField, Button, InputAdornment} from '@material-ui/core/';
 import { useState } from 'react';
 import axios from 'axios';
+import "../styles/generalStyles.css"
 
 function AddOffer (props) {
 
@@ -15,6 +16,7 @@ function AddOffer (props) {
         waste_type: '',
         waste_structure: '',
         waste_colour: '',
+        composition: '',
         contact_details: '',
         offer_image: ''
     })
@@ -53,6 +55,7 @@ function AddOffer (props) {
             fd.append('waste_colour', offer.waste_colour)
             fd.append('contact_details', offer.contact_details)
             fd.append('offer_image', offer.offer_image, offer.offer_image.name)
+            fd.append('composition', offer.composition)
             
             console.log(fd);
             console.log(offer.offer_image)    
@@ -83,7 +86,7 @@ function AddOffer (props) {
 
     return (
         <div>
-            <div style={{backgroundColor: '#bdbdbd', marginBottom: '50px' }}> 
+            <div className="header-background"> 
                 <HeaderComponent
                 getHomePage = {() => routes.toHomePage(props.history)}
                 getMarketPage = {() => routes.toMarketPage(props.history)} 
@@ -124,7 +127,7 @@ function AddOffer (props) {
                                 <MenuItem value={'Fabric scraps'}>Fabric scraps</MenuItem>
                                 <MenuItem value={'Apparel'}>Apparel</MenuItem>
                                 <MenuItem value={'Yarns'}>Yarns</MenuItem>
-                                <MenuItem value={'Home textile'}>Home textile</MenuItem>
+                                <MenuItem value={'Interior textile'}>Interior textile</MenuItem>
                             </Select>
                         <FormHelperText>Required</FormHelperText>
                     </FormControl>
@@ -181,6 +184,13 @@ function AddOffer (props) {
                         onChange={handleChange}
                         variant="outlined"
                     />
+
+                    <FormControl style={formStyle} >
+                            <TextField required
+                            onChange={handleChange}
+                            name="composition"  label="Composition" variant="outlined" />
+                            <FormHelperText>example: Woven - 30%, Leather - 70%</FormHelperText>
+                        </FormControl>
                 
                     <FormControl required style={formStyle}>
                         <InputLabel >Location</InputLabel>

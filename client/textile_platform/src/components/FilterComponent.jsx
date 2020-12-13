@@ -3,22 +3,29 @@ import {Checkbox, FormControlLabel, FormGroup} from '@material-ui/core';
 import { useState } from 'react';
 
 
-function FilerComponent () {
+function FilerComponent (props) {
 
   const [checkBoxState, setCheckBoxState] = useState({
-      checkedApparel: false,
-      checkedInteriorTextile: false,
-      checkedOthers: false,
 
-      checkedWoven: false,
-      checkedKnitted: false,
-      checkedNonWoven: false
+    Apparel: false,
+    InteriorTextile: false,
+    checkedOthers: false,
+      
+    Woven: false,
+    Knitted: false,
+    NonWoven: false
       
   })
 
-
   const handleChange = (event) => {
-    setCheckBoxState({ ...checkBoxState, [event.target.name]: event.target.checked });
+    setCheckBoxState({...checkBoxState, [event.target.name]: event.target.checked });
+
+    if(event.target.checked == true) {
+      props.filter (event.target.name)
+    } 
+
+    
+    
   };
 
     return (
@@ -27,11 +34,11 @@ function FilerComponent () {
             <h5>Post-cosumer waste</h5>
             <FormGroup>
               <FormControlLabel
-              control={<Checkbox checked={checkBoxState.checkedApparel} onChange={handleChange} name="checkedApparel"/>}
+              control={<Checkbox checked={checkBoxState.Apparel} onChange={handleChange} name="Apparel" type="waste_source"/>}
               label="Apparel"
               />
               <FormControlLabel
-              control={<Checkbox checked={checkBoxState.checkedInteriorTextile} onChange={handleChange} name="checkedInteriorTextile"/>}
+              control={<Checkbox checked={checkBoxState.InteriorTextile} onChange={handleChange} name="Interior Textile"/>}
               label="Interior Textile"
               />
               <FormControlLabel
@@ -44,11 +51,11 @@ function FilerComponent () {
             <h5>Structure</h5>
             <FormGroup>
               <FormControlLabel
-              control={<Checkbox checked={checkBoxState.checkedWoven} onChange={handleChange} name="checkedWoven"/>}
+              control={<Checkbox checked={checkBoxState.Woven} onChange={handleChange} name="Woven"/>}
               label="Woven"
               />
               <FormControlLabel
-              control={<Checkbox checked={checkBoxState.checkedKnitted} onChange={handleChange} name="checkedKnitted"/>}
+              control={<Checkbox checked={checkBoxState.Knitted} onChange={handleChange} name="Knitted"/>}
               label="Knitted"
               />
               <FormControlLabel

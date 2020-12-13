@@ -14,19 +14,6 @@ const port = 4321;
 app.use(express.json()) //offer body that we are sending will be attached to 'req' so we can access it
 app.use(cors());
 
-// const storage = multer.diskStorage({
-//     destination: function(req, file, cb) {
-//         cb(null, './upload/');
-
-//     },
-//     filename: function (req, file, cb) {
-//         cb(null, file.originalname)
-
-//     }
-// })
-
-//const upload = multer({storage: storage});
-
 
 
 cloudinary.config({
@@ -86,6 +73,16 @@ app.get("/getOffers/:id", async (req, res) => {
     })
 })
 
+app.get("/getOffers/:filter", async(req, res) => {
+
+    const customOffers = await database.query("SELECT * from offer WHERE :filter = $1", [req.params.filterOption])
+
+    res.json({
+        status: "success",
+        data: customOffers.rows
+    })
+})
+
 app.post("/createOffer", parser.single('offer_image'), async (req, res) => {
 
     console.log(req.body)
@@ -95,8 +92,8 @@ app.post("/createOffer", parser.single('offer_image'), async (req, res) => {
     console.log(req.file)
     try {
         const result  = await database.query(
-        "INSERT INTO offer (offer_title, offer_location, quantity, waste_source, waste_type, waste_structure, waste_colour, contact_details, offer_image) values ($1, $2, $3, $4, $5, $6, $7, $8, $9) returning *", 
-        [req.body.offer_title, req.body.offer_location, req.body.quantity, req.body.waste_source, req.body.waste_type, req.body.waste_structure, req.body.waste_colour, req.body.contact_details, req.file.path]
+        "INSERT INTO offer (offer_title, offer_location, quantity, waste_source, waste_type, waste_structure, waste_colour, contact_details, offer_image, composition) values ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) returning *", 
+        [req.body.offer_title, req.body.offer_location, req.body.quantity, req.body.waste_source, req.body.waste_type, req.body.waste_structure, req.body.waste_colour, req.body.contact_details, req.file.path, req.body.composition]
        // ["some test title", "req.body.offer_location", req.body.quantity, "req.body.waste_source", "req.body.waste_type", "req.body.waste_structure", "req.body.waste_colour", "req.body.contact_details", "req.file.url"]
         )
         res.status(201).json({
