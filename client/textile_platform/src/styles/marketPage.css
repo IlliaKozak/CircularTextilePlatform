@@ -1,26 +1,23 @@
 .market-top {
-    background-image: url("../images/market_background.jpg");
-    background-position-y: center;
-    background-position-x: center;
-    background-size: 100% 1400px;
-    height: 400px;
+  background-image: url("../images/market_background.jpg");
+  background-position-y: center;
+  background-position-x: center;
+  background-size: 100% 1400px;
+  height: 400px;
+}
+
+.market-intro {
+  width: 400px;
+  margin-left: 15%;
 }
 
 .filters {
-    margin: 15px;
-    background-color: #c2d3cd;
-    padding:10px
-}
-
-.offer-top {
-    background-image: url("../images/market_background.jpg");
-    background-position-y: center;
-    background-position-x: center;
-    background-size: 100% 1400px;
+  margin: 15px;
+  background-color: #c2d3cd;
+  padding: 10px;
 }
 
 .offer-form {
-    margin-top: 100px;
-    background-color: rgb(240, 240, 240);
-
+  margin-top: 100px;
+  background-color: rgb(240, 240, 240);
 }

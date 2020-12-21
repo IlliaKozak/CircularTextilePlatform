@@ -22,7 +22,7 @@ const homePage = (props) => {
                         <h3>Make use of your waste</h3>
                         
                         <Button variant="contained" color="green" >Join now</Button>
-                        <Button variant = "contained">Login</Button>   
+                        {/* <Button variant = "contained">Login</Button>    */}
                     </div>
                 </div>
             </div>

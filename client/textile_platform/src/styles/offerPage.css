@@ -1,22 +1,35 @@
-
-.grid{
-    padding-top: 60px;
-    padding-bottom: 60px;
+.offer-top {
+  background-image: url("../images/market_background.jpg");
+  background-position-y: center;
+  background-position-x: center;
+  background-size: 100% 1400px;
 }
-    .offer-image {
-        width: 350px;
-        height: 400px;
-    }
 
-    .data-form {
-        width: 400px;
-        margin: auto;
-    }
+.intro-top {
+  padding-bottom: 50px;
+}
 
-        .data-form p, h3{
-            margin-top: 30px;
-            margin-bottom: 10px;
-        }
+.grid {
+  padding-top: 30px;
+  padding-bottom: 40px;
+}
+.offer-image {
+  width: 350px;
+  height: 350px;
+}
 
+.offer-form {
+  margin-top: 50px;
+  background-color: rgb(224, 160, 160);
+}
 
+.data-form {
+  width: 400px;
+  margin: auto;
+}
 
+.data-form p,
+h3 {
+  margin-top: 30px;
+  margin-bottom: 10px;
+}

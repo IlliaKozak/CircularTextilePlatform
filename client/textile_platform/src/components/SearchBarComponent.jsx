@@ -3,13 +3,14 @@ import { useHistory } from 'react-router-dom';
 import {Button, TextField} from '@material-ui/core/';
 
 
-const SearchBar = ({ searchQuery, setSearchQuery }) => {
+const SearchBar = ({ searchQuery, setSearchQuery, searchOffers }) => {
 
     const history = useHistory();
 
     const onSubmit = (e) => {
-        history.push(`?s=${searchQuery}`);
+        history.push(`?search=${searchQuery}`);
         e.preventDefault();
+        searchOffers();
     };
         return (
             <form
@@ -18,16 +19,12 @@ const SearchBar = ({ searchQuery, setSearchQuery }) => {
                 autoComplete="off"
                 onSubmit={onSubmit}
             >
-                {/* <label htmlFor="header-search">
-                    <span className="visually-hidden">
-                        Search blog posts
-                    </span>
-                </label> */}
                 <TextField type="text" 
                             value={searchQuery}
                             onInput={(e) => setSearchQuery(e.target.value)} 
                             label="Search for an offer" 
-                            name="search"/>
+                            name="search"
+                            />
 
                 <Button type="submit"
                         variant="contained"

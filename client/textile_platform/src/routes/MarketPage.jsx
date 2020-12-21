@@ -1,133 +1,151 @@
-import React, { Component } from 'react';
-import axios from 'axios';
+import React, { Component } from "react";
+import axios from "axios";
 import routes from "../routes/allRoutes";
-import OfferItemComponent from '../components/OfferItemComponent';
-import HeaderComponent from "../components/HeaderComponent"
+import OfferItemComponent from "../components/OfferItemComponent";
+import HeaderComponent from "../components/HeaderComponent";
 import FilterComponent from "../components/FilterComponent";
 import SearchBarComponent from "../components/SearchBarComponent";
 import "../styles/marketPage.css";
 import "../styles/homePage.css";
-import {Grid, Button, TextField} from '@material-ui/core/';
+import { Grid, Button, TextField } from "@material-ui/core/";
 
-class MarketPage extends Component  {
-    constructor(props) {
-        super(props)
-        this.state = {
-            offersData: [],
-            originalOffersData: [],
-            searchQuery: '',
-            search: window.location
-    
-        }
-        this.filterOffers = this.filterOffers.bind(this) //???
-        this.searchOffers = this.searchOffers.bind(this)
-    }
+class MarketPage extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      offersData: [],
+      originalOffersData: [],
+      searchQuery: "",
+      search: window.location,
+    };
+    this.filterOffers = this.filterOffers.bind(this); //???
+    this.searchOffers = this.searchOffers.bind(this);
+    this.setSearchQuery = this.setSearchQuery.bind(this);
+    this.clearFilters = this.clearFilters.bind(this);
+  }
 
-    
+  componentDidMount() {
+    //getting data of all offers by via request to server.js
+    axios.get("http://localhost:4321/getOffers").then((response) => {
+      this.setState({
+        offersData: response.data.data.offers,
+        originalOffersData: response.data.data.offers,
+      });
+      console.log(response);
+    });
+  }
 
-    componentDidMount() { //getting data of all offers by via request to server.js
-        axios.get('http://localhost:4321/getOffers').then((response) => {
-            this.setState({
-                offersData: response.data.data.offers,
-                originalOffersData: response.data.data.offers})
-            console.log(response)
-        }) 
-    }
+  clearFilters() {
+    this.componentDidMount();
+  }
 
-    filterOffers (option_type) {
-        let filteredOffers = []
+  filterOffers(option_type, option_name) {
+    let filteredOffers = [];
 
-        if (this.state.offersData.length == this.state.originalOffersData.length) {
-            filteredOffers = this.state.offersData.filter(offer => offer.waste_structure === option_type)
-            console.log(filteredOffers)
-            this.setState({
-            offersData: filteredOffers
-            });
-        } else {
-            filteredOffers = this.state.originalOffersData.filter(offer => offer.waste_structure === option_type)
-            console.log(filteredOffers)
-            this.setState({
-            offersData: this.state.offersData.concat(filteredOffers)
-            });
-        }
-        
-        console.log(this.state.offersData)
-    }
+    filteredOffers = this.state.offersData.filter(
+      (offer) => offer[option_type] === option_name
+    );
+    this.setState({
+      offersData: filteredOffers,
+    });
 
-    searchOffers(query) {
-        let searchResults = []
+    console.log(this.state.offersData);
+  }
 
-        searchResults = this.state.originalOffersData.filter(offer => offer.offer_title.includes(query))
-        this.setState({
-            offersData: searchResults
-        })
-        console.log(searchResults)
-    }
+  setSearchQuery(value) {
+    this.setState({
+      searchQuery: value,
+    });
+  }
 
-    toSingleOffer = (offerId) => { //while moving to the page of chosen offers we are also passing an id of selected offer to render an element
-        this.props.history.push({
-            pathname: "getOffers/"+offerId,
-            state: {id: offerId}});
-    }
+  searchOffers() {
+    let searchResults = [];
 
-    render() {
-    
-    console.log(this.state.offersData)
+    searchResults = this.state.originalOffersData.filter((offer) =>
+      offer.offer_title.includes(this.state.searchQuery)
+    );
+    this.setState({
+      offersData: searchResults,
+    });
+  }
 
-        return (
-            <div>
-                <div className="market-top">
-                    <HeaderComponent
-                getHomePage = {() => routes.toHomePage(this.props.history)}
-                getMarketPage = {() => routes.toMarketPage(this.props.history)} 
-                getAboutPage =  {() => routes.toAboutPage(this.props.history)}></HeaderComponent>
+  toSingleOffer = (offerId) => {
+    //while moving to the page of chosen offers we are also passing an id of selected offer to render an element
+    this.props.history.push({
+      pathname: "getOffers/" + offerId,
+      state: { id: offerId },
+    });
+  };
 
-                    <div className = "home-intro">
-                        <div className= "intro-container">
-                            <h1>Search scrap</h1>
-                            <h3>Make use of your waste</h3> 
-                        </div>   
-                    </div>
-                </div>
+  render() {
+    return (
+      <div>
+        <div className="market-top">
+          <HeaderComponent
+            getHomePage={() => routes.toHomePage(this.props.history)}
+            getMarketPage={() => routes.toMarketPage(this.props.history)}
+            getAboutPage={() => routes.toAboutPage(this.props.history)}
+          ></HeaderComponent>
 
-                <Grid container spacing={1} alignItems="flex-end">
-                            <Grid item xs={9}>  
-                                <SearchBarComponent/>
-                            </Grid>
-                            <Grid item xs={3}>
-                                <Button variant="contained" color="primary" onClick= {() => routes.toAddOfferPage(this.props.history)}>Add an offer</Button>
-                            </Grid>
-                        </Grid>
+          <div className="market-intro">
+            <h1>Search scrap</h1>
+            <h5>
+              Go ahead and find the fabrics you are looking for. We are sure
+              that there are some beautiful leftover textiles waiting for you to
+              be put back into life.
+            </h5>
+          </div>
+        </div>
 
-                
-                <Grid container>
-                    <Grid item xs={3}>
-                        <div className="filters">
-                        <FilterComponent filter = {this.filterOffers}></FilterComponent>
-                        </div>
-                    </Grid>
+        <Grid container spacing={1} alignItems="flex-end">
+          <Grid item xs={9}>
+            <SearchBarComponent
+              searchQuery={this.state.searchQuery}
+              setSearchQuery={this.setSearchQuery}
+              searchOffers={this.searchOffers}
+            />
+          </Grid>
+          <Grid item xs={3}>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={() => routes.toAddOfferPage(this.props.history)}
+            >
+              Add an offer
+            </Button>
+          </Grid>
+        </Grid>
 
-                    <Grid item xs = {9}>
-                        <Grid container>
-                            {this.state.offersData.map((offer, key)=> {
-                            return(
-                                <OfferItemComponent key = {key} 
-                                image = {offer.offer_image}
-                                title = {offer.offer_title}
-                                overview = {offer.offer_overview}
-                                location = {offer.offer_location}
-                                id = {offer.offer_id}
-                                clicked = {() => this.toSingleOffer(offer.offer_id)} ></OfferItemComponent>
-                            )
-                            })}
-                        </Grid>
-                    </Grid>
-                </Grid>
+        <Grid container>
+          <Grid item xs={3}>
+            <div className="filters">
+              <FilterComponent
+                filter={this.filterOffers}
+                clearFilters={this.clearFilters}
+              ></FilterComponent>
             </div>
-        )
+          </Grid>
 
-    }
-    
+          <Grid item xs={9}>
+            <Grid container>
+              {this.state.offersData.map((offer, key) => {
+                return (
+                  <OfferItemComponent
+                    key={key}
+                    image={offer.offer_image}
+                    title={offer.offer_title}
+                    location={offer.offer_location}
+                    id={offer.offer_id}
+                    clicked={() => this.toSingleOffer(offer.offer_id)}
+                  ></OfferItemComponent>
+                );
+              })}
+            </Grid>
+          </Grid>
+        </Grid>
+      </div>
+    );
+  }
 }
 
 export default MarketPage;

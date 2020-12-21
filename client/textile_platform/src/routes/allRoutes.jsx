@@ -1,20 +1,27 @@
+const toLoginPage = (history) => {
+  history.push("/");
+};
 
 const toHomePage = (history) => {
-    history.push("/")
-}
+  history.push("/home");
+};
 
 const toMarketPage = (history) => {
-    history.push("/getOffers");
-}
+  history.push("/getOffers");
+};
 
 const toAboutPage = (history) => {
-    history.push("/about");
-}
+  history.push("/about");
+};
 
 const toAddOfferPage = (history) => {
-    history.push("/addOffer")
-}
+  history.push("/addOffer");
+};
 
-
-
-export default {toHomePage, toMarketPage, toAboutPage, toAddOfferPage}
+export default {
+  toLoginPage,
+  toHomePage,
+  toMarketPage,
+  toAboutPage,
+  toAddOfferPage,
+};
