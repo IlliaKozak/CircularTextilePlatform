@@ -7,7 +7,7 @@ import FilterComponent from "../components/FilterComponent";
 import SearchBarComponent from "../components/SearchBarComponent";
 import "../styles/marketPage.css";
 import "../styles/homePage.css";
-import { Grid, Button, TextField } from "@material-ui/core/";
+import { Grid, Button } from "@material-ui/core/";
 
 class MarketPage extends Component {
   constructor(props) {
@@ -84,6 +84,7 @@ class MarketPage extends Component {
           <HeaderComponent
             getHomePage={() => routes.toHomePage(this.props.history)}
             getMarketPage={() => routes.toMarketPage(this.props.history)}
+            getNewsPage={() => routes.toNewsPage(this.props.history)}
             getAboutPage={() => routes.toAboutPage(this.props.history)}
           ></HeaderComponent>
 
@@ -106,13 +107,14 @@ class MarketPage extends Component {
             />
           </Grid>
           <Grid item xs={3}>
-            <Button
+            <button
+              className="button-general"
               variant="contained"
               color="primary"
               onClick={() => routes.toAddOfferPage(this.props.history)}
             >
-              Add an offer
-            </Button>
+              ADD AN OFFER
+            </button>
           </Grid>
         </Grid>
 

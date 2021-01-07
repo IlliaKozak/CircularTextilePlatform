@@ -11,12 +11,27 @@ import {
   TextField,
   Button,
   InputAdornment,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
 } from "@material-ui/core/";
+import HelpOutlineIcon from "@material-ui/icons/HelpOutline";
 import { useState } from "react";
 import axios from "axios";
 import "../styles/generalStyles.css";
 
 function AddOffer(props) {
+  const [openDescription, setOpenDesciption] = useState(false);
+
+  const handleClickOpen = () => {
+    setOpenDesciption(true);
+  };
+
+  const handleClose = () => {
+    setOpenDesciption(false);
+  };
+
   const [offer, setOffer] = useState({
     offer_title: "",
     offer_location: "",
@@ -47,40 +62,42 @@ function AddOffer(props) {
       ...offer,
       offer_image: event.target.files[0],
     });
-    console.log(event.target.files[0]);
   };
 
   const handleSubmit = async (e) => {
-    try {
-      const fd = new FormData();
-      fd.append("offer_title", offer.offer_title);
-      fd.append("offer_location", offer.offer_location);
-      fd.append("quantity", offer.quantity);
-      fd.append("waste_source", offer.waste_source);
-      fd.append("waste_type", offer.waste_type);
-      fd.append("waste_structure", offer.waste_structure);
-      fd.append("waste_colour", offer.waste_colour);
-      fd.append("contact_details", offer.contact_details);
-      fd.append("offer_image", offer.offer_image, offer.offer_image.name);
-      fd.append("composition", offer.composition);
+    if (offer.offer_title == "" || offer.offer_image == "") {
+      return alert("Please fill in all text fields");
+    } else {
+      try {
+        const fd = new FormData();
+        fd.append("offer_title", offer.offer_title);
+        fd.append("offer_location", offer.offer_location);
+        fd.append("quantity", offer.quantity);
+        fd.append("waste_source", offer.waste_source);
+        fd.append("waste_type", offer.waste_type);
+        fd.append("waste_structure", offer.waste_structure);
+        fd.append("waste_colour", offer.waste_colour);
+        fd.append("contact_details", offer.contact_details);
+        fd.append("offer_image", offer.offer_image, offer.offer_image.name);
+        fd.append("composition", offer.composition);
 
-      console.log(fd);
-      console.log(offer.offer_image);
-      const response = await axios.post(
-        "http://localhost:4321/createOffer",
-        fd,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
-      console.log(response);
-    } catch (err) {
-      console.log(err);
+        console.log(fd);
+        console.log(offer.offer_image);
+        const response = await axios.post(
+          "http://localhost:4321/createOffer",
+          fd,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        );
+      } catch (err) {
+        console.log(err);
+      }
+
+      return alert("Item was created");
     }
-
-    return alert("Item was created");
   };
 
   return (
@@ -89,6 +106,7 @@ function AddOffer(props) {
         <HeaderComponent
           getHomePage={() => routes.toHomePage(props.history)}
           getMarketPage={() => routes.toMarketPage(props.history)}
+          getNewsPage={() => routes.toNewsPage(props.history)}
           getAboutPage={() => routes.toAboutPage(props.history)}
         ></HeaderComponent>
 
@@ -201,7 +219,9 @@ function AddOffer(props) {
             label="Composition"
             variant="outlined"
           />
-          <FormHelperText>example: Woven - 30%, Leather - 70%</FormHelperText>
+          <FormHelperText>
+            example: Cotton - 30%, Polyester - 70%
+          </FormHelperText>
         </FormControl>
 
         <FormControl required style={formStyle}>
@@ -231,6 +251,29 @@ function AddOffer(props) {
 
         <form enctype="multipart/form-data" method="post">
           <input type="file" name="offer_image" onChange={handleImageChange} />
+          <HelpOutlineIcon onClick={handleClickOpen} />
+          <Dialog open={openDescription} onClose={handleClose}>
+            <DialogTitle id="alert-dialog-title">
+              Before uploading the photo, please make sure that:
+            </DialogTitle>
+            <DialogContent>
+              <p>
+                1. The photo has a good resolution: it’s not blurry and
+                pixelated, but clear and sharp.
+              </p>
+              <p>2. It’s ca. 100KB, between 150 - 250dpi (Dots per Inch)</p>
+              <p>
+                3. The photo is in colour It shows a close-up of the offered
+                textiles (if possible)
+              </p>
+              <p>4. Check the photos of current offers as an example</p>
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={handleClose} color="primary" autoFocus>
+                OK
+              </Button>
+            </DialogActions>
+          </Dialog>
         </form>
 
         <div style={{ margin: "40px" }}>

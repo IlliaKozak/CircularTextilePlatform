@@ -44,9 +44,14 @@ function FilerComponent(props) {
 
   return (
     <div>
-      <Button variant="contained" color="primary" onClick={resetFilters}>
-        Clear Filters
-      </Button>
+      <button
+        className="button-general"
+        style={{ backgroundColor: "#698878", marginBottom: "15px" }}
+        variant="contained"
+        onClick={resetFilters}
+      >
+        CLEAR FILTERS
+      </button>
       <div>
         <h5>Post-cosumer waste</h5>
         <FormGroup>

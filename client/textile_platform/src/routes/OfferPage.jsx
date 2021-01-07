@@ -1,6 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import "../styles/offerPage.css";
+import logo from "../images/Logo_darkgreen.png";
 import HeaderComponent from "../components/HeaderComponent";
 import routes from "../routes/allRoutes";
 import axios from "axios";
@@ -23,6 +24,7 @@ function OfferPage(props) {
         <HeaderComponent
           getHomePage={() => routes.toHomePage(props.history)}
           getMarketPage={() => routes.toMarketPage(props.history)}
+          getNewsPage={() => routes.toNewsPage(props.history)}
           getAboutPage={() => routes.toAboutPage(props.history)}
         />
 
@@ -41,9 +43,9 @@ function OfferPage(props) {
         </Grid>
       </div>
 
-      <div className="offer-form">
+      <div className="offer-info">
         <Grid container className="grid">
-          <Grid item xs={5}>
+          <Grid item xs={6}>
             <div className="data-form">
               <p>Waste source: {offerData.waste_source} </p>
               <Divider />
@@ -57,12 +59,24 @@ function OfferPage(props) {
               <Divider />
               <p>Waste composition: {offerData.composition} </p>
               <Divider />
-              <p>Location: {offerData.offer_location}</p>
-              <Divider />
             </div>
           </Grid>
 
-          <Grid item xs={7}></Grid>
+          <Grid item xs={6}>
+            <div className="company-form">
+              <div>
+                <img src={logo} className="company-logo" alt="logo"></img>
+              </div>
+              <p>Company name: N\A</p>
+              <Divider />
+              <p>Company type: N\A</p>
+              <Divider />
+              <p>Location: {offerData.offer_location}</p>
+              <Divider />
+              <p>Contact us: {offerData.contact_details}</p>
+              <Divider />
+            </div>
+          </Grid>
         </Grid>
       </div>
     </div>

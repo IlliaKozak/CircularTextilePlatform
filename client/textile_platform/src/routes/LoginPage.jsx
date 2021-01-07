@@ -46,7 +46,7 @@ function LoginPage(props) {
         <TextField
           required
           variant="outlined"
-          label="Username"
+          label="Email"
           onInput={(e) => setUsername(e.target.value)}
         />
       </div>
@@ -60,9 +60,13 @@ function LoginPage(props) {
         />
       </div>
 
-      <Button variant="contained" color="primary" onClick={() => inputCheck()}>
-        Login
-      </Button>
+      <button
+        className="button-general"
+        style={{ backgroundColor: "#698878" }}
+        onClick={() => inputCheck()}
+      >
+        LOGIN
+      </button>
     </div>
   );
 }

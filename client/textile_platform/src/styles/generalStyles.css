@@ -1,8 +1,29 @@
 .header-background {
-    background-color: #698878;
+  background-color: #698878;
 }
 
-h1,h2,h3 {
-    color: #1a1919;
-    font-family: Arial, Helvetica, sans-serif;
+h1,
+h2,
+h3 {
+  color: #1a1919;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.button-general {
+  background-color: #b7c9c3;
+  padding: 4px 15px;
+  border-radius: 5px;
+  border-width: 0px;
+
+  color: white;
+  font-size: 18px;
+  margin-right: 10px;
+
+  transition-duration: 0.4s;
+}
+
+.button-general:hover {
+  background-color: #e5e4e4;
+  border-color: #c2d3cd;
+  color: black;
 }

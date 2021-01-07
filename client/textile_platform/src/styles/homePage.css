@@ -1,91 +1,78 @@
 .page-top {
-    background-image: url("../images/photocotton111.jpg");
-    background-position-x: right;
-    background-position: bottom;
-    background-size: 1550px 720px;
+  background-image: url("../images/photocotton111.jpg");
+  background-position-x: right;
+  background-position: bottom;
+  background-size: 1550px 720px;
 }
 
-    .header {
-        display: flex;
-        padding-top: 30px;
+.header {
+  display: flex;
+  padding-top: 30px;
+}
 
+.logo-container {
+  flex: 3;
+  text-align: left;
+}
 
-    }
+.logo {
+  width: 150px;
+  height: 150px;
+  margin-left: 50px;
+}
 
-        .logo-container {
-            flex:3;
-            text-align: left;
-        } 
+.navigation-container {
+  flex: 2;
+}
 
-        .logo {
-            width: 150px;
-            height: 150px;
-            margin-left: 50px;
-        }
+.btn-primary {
+  margin: 10px;
+}
 
-        .navigation-container {
-            flex: 2;
-        }
+.intro-container {
+  align-items: flex-start;
+  margin-left: 20%;
+  margin-bottom: 10%;
+}
 
-        .btn-primary {
-            margin: 10px;
-        }
-
-        .intro-container {
-            align-items: flex-start;
-            margin-left: 20%;
-            margin-bottom: 10%;
-        }
-
-        .home-intro {
-            display: flex;
-            margin-top: 50px;
-        }
+.home-intro {
+  display: flex;
+  margin-top: 50px;
+}
 
 h1 {
-    color: rgb(0, 0, 0);
-    font-family: sans-serif;
-    font-weight: initial;
-    word-spacing: normal;
+  color: rgb(0, 0, 0);
+  font-family: sans-serif;
+  font-weight: initial;
+  word-spacing: normal;
 }
 
 h3 {
-    color: rgb(0, 0, 0);
+  color: rgb(0, 0, 0);
 }
 
 .partners-list {
-    height: 80px;
-    background-color: rgb(177, 177, 167);
+  height: 80px;
+  background-color: rgb(177, 177, 167);
 }
 
 .home-content {
-    margin-top: 50px;
-    margin-bottom: 100px;
-    
+  margin-top: 50px;
+  margin-bottom: 100px;
 }
 
-    .home-article {
-        text-align: center;
-        padding-top: 50px;
-        margin-left: 20%;
-        margin-right: 20%;
-        padding-bottom: 50px;
-    }
+.home-article {
+  text-align: center;
+  padding-top: 50px;
+  margin-left: 20%;
+  margin-right: 20%;
+  padding-bottom: 50px;
+}
 
-    .grid-article {
-        text-align: center;
-        padding-top: 10px;
-        margin-left: 10%;
-        margin-right: 10%;
-        padding-bottom: 70px;
-    }
-
-
-
-
-
-
-
-
-
-
+.grid-article {
+  text-align: center;
+  padding-top: 10px;
+  margin-left: 10%;
+  margin-right: 10%;
+  padding-bottom: 70px;
+}

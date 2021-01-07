@@ -10,6 +10,10 @@ const toMarketPage = (history) => {
   history.push("/getOffers");
 };
 
+const toNewsPage = (history) => {
+  history.push("/news");
+};
+
 const toAboutPage = (history) => {
   history.push("/about");
 };
@@ -22,6 +26,7 @@ export default {
   toLoginPage,
   toHomePage,
   toMarketPage,
+  toNewsPage,
   toAboutPage,
   toAddOfferPage,
 };

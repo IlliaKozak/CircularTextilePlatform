@@ -14,6 +14,7 @@ const offerItem = (props) => {
   };
 
   const imageStyle = {
+    borderRadius: "7px",
     width: "200px",
     height: "200px",
   };
@@ -22,7 +23,7 @@ const offerItem = (props) => {
     <Grid item xs={3}>
       <Paper style={styling} onClick={props.clicked}>
         <img src={props.image} style={imageStyle} alt="offer" />
-        <div className="offer-info">
+        <div className="grid-item">
           <h5>{props.title}</h5>
           <p>Location: {props.location}</p>
         </div>
