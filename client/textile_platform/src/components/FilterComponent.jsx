@@ -9,13 +9,19 @@ import { useState } from "react";
 
 function FilerComponent(props) {
   const [checkBoxState, setCheckBoxState] = useState({
+    "Fabric scraps": false,
+    Yarns: false,
+
     Apparel: false,
     "Interior textile": false,
     Others: false,
 
     Woven: false,
     Knitted: false,
-    NonWoven: false,
+    "Non-woven": false,
+
+    "Light-coloured": false,
+    "Dark-coloured": false,
 
     Netherlands: false,
     Germany: false,
@@ -53,7 +59,29 @@ function FilerComponent(props) {
         CLEAR FILTERS
       </button>
       <div>
-        <h5>Post-cosumer waste</h5>
+        <h5>Pre-consumer waste</h5>
+        <FormGroup>
+          <FormControlLabel
+            control={
+              <Checkbox
+                // checked={checkBoxState.Apparel}
+                onChange={handleChange}
+                name="Fabric scraps"
+                id="waste_type"
+              />
+            }
+            label="Fabric scraps"
+          />
+          <FormControlLabel
+            control={
+              <Checkbox onChange={handleChange} name="Yarns" id="waste_type" />
+            }
+            label="Yarns"
+          />
+        </FormGroup>
+      </div>
+      <div>
+        <h5>Post-consumer waste</h5>
         <FormGroup>
           <FormControlLabel
             control={
@@ -91,6 +119,31 @@ function FilerComponent(props) {
         </FormGroup>
       </div>
       <div>
+        <h5>Colour</h5>
+        <FormGroup>
+          <FormControlLabel
+            control={
+              <Checkbox
+                id="waste_colour"
+                onChange={handleChange}
+                name="Light-coloured"
+              />
+            }
+            label="Light-coloured"
+          />
+          <FormControlLabel
+            control={
+              <Checkbox
+                id="waste_colour"
+                onChange={handleChange}
+                name="Dark-coloured"
+              />
+            }
+            label="Dark-coloured"
+          />
+        </FormGroup>
+      </div>
+      <div>
         <h5>Structure</h5>
         <FormGroup>
           <FormControlLabel
@@ -119,12 +172,12 @@ function FilerComponent(props) {
             control={
               <Checkbox
                 id="waste_structure"
-                checked={checkBoxState.checkedNonWoven}
+                // checked={checkBoxState.checkedNonWoven}
                 onChange={handleChange}
-                name="checkedNonWoven"
+                name="Non-woven"
               />
             }
-            label="Non-Woven"
+            label="Non-woven"
           />
         </FormGroup>
       </div>
