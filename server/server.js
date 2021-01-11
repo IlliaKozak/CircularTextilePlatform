@@ -1,4 +1,5 @@
 const express = require("express");
+const path = require("path");
 const database = require("./database");
 const cors = require("cors");
 require("dotenv").config();
@@ -27,6 +28,14 @@ const storageCloudinary = new CloudinaryStorage({
 });
 
 const parser = multer({ storage: storageCloudinary });
+
+app.use(express.static(path.join(__dirname, "build")));
+
+if (process.env.NODE_ENV === "production") {
+  app.get("/*", function (req, res) {
+    res.sendFile(path.join(__dirname, "build", "index.html"));
+  });
+}
 
 app.get("/getOffers", async (req, res) => {
   const offers = await database.query("SELECT * from offer");
